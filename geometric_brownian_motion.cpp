@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include "/home/kempayne/BM/HeaderFiles/Random1.h"
+#include "/HeaderFiles/Random1.h"
 
 using namespace std;
 
@@ -9,28 +9,25 @@ int main()
 {
 	double TimeHorizon, TimeInterval, Drift, Vol;
 	
-	TimeHorizon = 20;			// Number of years for simulation
+	TimeHorizon = 10;			// Number of years for simulation
 	TimeInterval = 1;			// This will have to be divisible into TimeHorizon so that an integer is the quotient;	
 	
 	int NumberOfIterations = TimeHorizon / TimeInterval;
 	double StockPrice[NumberOfIterations];
 	
-	StockPrice[0] = 100;		// Initial stock price
+	StockPrice[0] = 100;			// Initial stock price
 	Drift = .07;				// Expected return
-	Vol = .05;					// Volatility of returns
+	Vol = .05;				// Volatility of returns
 		
-	double TimeAxis[NumberOfIterations];
-	TimeAxis[0] = 0;
+	double TimeAxis[NumberOfIterations];	// Initialize time axis array
+	TimeAxis[0] = 0;	
 	double GaussianRV;
 	
-	// cout << TimeAxis[0] << ", " << StockPrice[0] << endl;
-	
-	for (int i = 1; i <= NumberOfIterations; i++)
+	for (int i = 1; i <= NumberOfIterations; i++)		// Calculate stock price based on random walk
 	{
 		TimeAxis[i] = i * TimeInterval;
 		GaussianRV = GetOneGaussianByBoxMuller();
-		StockPrice[i] = StockPrice[i-1] * (1 + (Drift * TimeInterval) + (Vol * GaussianRV * sqrt(TimeInterval)));
-	
+		StockPrice[i] = StockPrice[i-1] * (1 + (Drift * TimeInterval) + (Vol * GaussianRV * sqrt(TimeInterval)));	
 	}	
 	
 	ofstream BMData;
@@ -38,14 +35,10 @@ int main()
 	
 	for (int i=0; i < NumberOfIterations; i++)
 	{
-	
-		BMData << TimeAxis[i] << "," << StockPrice[i] << endl;
-	
+		BMData << TimeAxis[i] << "," << StockPrice[i] << endl;		// output each price to CSV file
 	}
 	
-	BMData.close();
-		
-		
+	BMData.close();	
 	return 0;		
 }
 	
