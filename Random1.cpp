@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <cmath>
 
-// the basic math functions should be in namespace std but aren't in VCPP6
-
 #if !defined(_MSC_VER)
 using namespace std;
 #endif
